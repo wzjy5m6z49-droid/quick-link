@@ -1,88 +1,17 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Quick Links Test</title>
-
-<style>
-body{
-  margin:0;
-  padding:24px;
-  font-family:"Segoe UI",sans-serif;
-  background:#f5f7fa;
-}
-
-.links{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-.link{
-  display:flex;
-  align-items:center;
-  gap:12px;
-
-  padding:16px 20px;
-
-  background:#fff;
-  border-radius:12px;
-
-  text-decoration:none;
-  color:#222;
-
-  box-shadow:0 4px 12px rgba(0,0,0,.08);
-
-  transition:.2s;
-}
-
-.link:hover{
-  transform:translateY(-2px);
-}
-
-.icon{
-  font-size:24px;
-}
-
-.title{
-  font-size:16px;
-  font-weight:600;
-}
-</style>
-</head>
-<body>
-
-<div id="links" class="links"></div>
-
-<script src="https://kentashinzato.sharepoint.com/sites/test/SiteAssets/quick-links/quick-links-data.js"></script>
-
 <script>
+const script = document.createElement('script');
 
-const app = document.getElementById('links');
+script.src =
+  'https://kentashinzato.sharepoint.com/sites/test/SiteAssets/quick-links/quick-links-data.js?v='
+  + new Date().getTime();
 
-const data = [...(window.quickLinksData || [])]
-  .sort((a,b) => a.sortOrder - b.sortOrder);
+script.onload = () => {
+  console.log(window.quickLinksData);
+};
 
-data.forEach(item => {
+script.onerror = () => {
+  console.error('quick-links-data.js の読み込み失敗');
+};
 
-  const el = document.createElement('a');
-
-  el.className = 'link';
-  el.href = item.link;
-  el.target = '_blank';
-
-  el.innerHTML = `
-    <span class="icon">${item.icon}</span>
-    <span class="title">${item.title}</span>
-  `;
-
-  app.appendChild(el);
-
-});
-
+document.head.appendChild(script);
 </script>
-
-</body>
-</html>
