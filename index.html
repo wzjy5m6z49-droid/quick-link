@@ -1,17 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Quick Links Test</title>
+</head>
+<body>
+
+<h1>quick-links test</h1>
+<div id="links">読み込み中...</div>
+
 <script>
 const script = document.createElement('script');
 
 script.src =
   'https://kentashinzato.sharepoint.com/sites/test/SiteAssets/quick-links/quick-links-data.js?v='
-  + new Date().getTime();
+  + Date.now();
 
 script.onload = () => {
-  console.log(window.quickLinksData);
+  const app = document.getElementById('links');
+  const data = window.quickLinksData || [];
+
+  app.innerHTML = '';
+
+  data.forEach(item => {
+    const a = document.createElement('a');
+    a.href = item.link;
+    a.target = '_blank';
+    a.textContent = item.icon + ' ' + item.title;
+    a.style.display = 'block';
+    a.style.margin = '8px 0';
+
+    app.appendChild(a);
+  });
 };
 
 script.onerror = () => {
-  console.error('quick-links-data.js の読み込み失敗');
+  document.getElementById('links').textContent =
+    'quick-links-data.js の読み込み失敗';
 };
 
 document.head.appendChild(script);
 </script>
+
+</body>
+</html>
